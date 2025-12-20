@@ -1,3 +1,24 @@
+## 三分屏配置
+- 在文件夹下新建三个文件：`solution.cpp`，`input.txt`，`output.txt`
+- 在 VS Code 中同时打开它们
+- 调整布局：
+  - 把 `solution.cpp` 放在左边
+  - 把 `input.txt` 拖动到右上角
+  - 把 `output.txt` 拖动到右下角
+- 代码重定向：
+```cpp
+#ifndef ONLINE_JUDGE
+freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);
+#endif
+```
+- 输出调试信息：
+```cpp
+#ifndef ONLINE_JUDGE
+    cerr << "Debug: 当前变量 x 的值是 " << x << endl;
+#endif
+```
+
 ## 基础模板
 ```cpp
 #include<bits/stdc++.h>
