@@ -1,15 +1,16 @@
 ## 三分屏配置
-- 在文件夹下新建三个文件：`solution.cpp`，`input.txt`，`output.txt`
+> Gemini倾情贡献
+- 在文件夹下新建三个文件：`solution.cpp`，`input.in`，`output.out`
 - 在 VS Code 中同时打开它们
 - 调整布局：
   - 把 `solution.cpp` 放在左边
-  - 把 `input.txt` 拖动到右上角
-  - 把 `output.txt` 拖动到右下角
+  - 把 `input.in` 拖动到右上角
+  - 把 `output.out` 拖动到右下角
 - 代码重定向：
 ```cpp
 #ifndef ONLINE_JUDGE
-freopen("input.txt", "r", stdin);
-freopen("output.txt", "w", stdout);
+freopen("input.in", "r", stdin);
+freopen("output.out", "w", stdout);
 #endif
 ```
 - 输出调试信息：
@@ -35,6 +36,11 @@ void solve()
 
 signed main()
 {
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+    
     ios::sync_with_stdio(0),cin.tie(0),cout.tie(0);
     int _ = 1;
     //cin >> _;
@@ -141,6 +147,11 @@ vector<int> mul(vector<int> &A, int b)
 }
 ```
 
+### BI * BI
+```cpp
+
+```
+
 ### BI / I
 ```cpp
 vector<int> div(vector<int> &A, int b, int &r)
@@ -207,11 +218,98 @@ void solve()
 }
 ```
 
-## BFS
+## BFS 
+
+<font color = red> 蓝大人给的，直接抄下来了 </font>
+<font color = red> 记得修改！！！ </font>
+<font color = red> 记得修改！！！ </font>
+<font color = red> 记得修改！！！ </font>
+
 ```cpp
 void solve()
 {
+    #include <iostream>
+#include <queue>
+#include <cstring> // 用于memset
 
+using namespace std;
+
+// 定义最大范围，别到时候RE了哭着来找我
+const int MAXN = 1005;
+const int INF = 0x3f3f3f3f;
+
+// 地图与距离数组
+int mp[MAXN][MAXN]; // 存图，0空地，1障碍
+int dist[MAXN][MAXN]; // 存起点到(x,y)的最短距离
+int n, m; // 行数，列数
+
+// 方向数组！这点小技巧都不会的话就趁早退役吧
+// 对应：上、下、左、右
+int dx[] = {-1, 1, 0, 0};
+int dy[] = {0, 0, -1, 1};
+
+struct Node {
+    int x, y;
+};
+
+void bfs(int sx, int sy, int ex, int ey) {
+    // 1. 初始化
+    // 把距离数组初始化为无穷大，表示未访问
+    memset(dist, -1, sizeof(dist)); 
+    
+    queue<Node> q;
+    
+    // 2. 起点入队
+    q.push({sx, sy});
+    dist[sx][sy] = 0; // 起点距离为0
+    
+    while (!q.empty()) {
+        // 3. 取出队首
+        Node cur = q.front();
+        q.pop();
+        
+        // 这里的 cur.x, cur.y 就是当前层级的节点
+        // 如果题目要求到达终点立刻停止，可以在这里判断
+        if (cur.x == ex && cur.y == ey) {
+            cout << dist[cur.x][cur.y] << endl;
+            return;
+        }
+        
+        // 4. 扩展节点（向四个方向）
+        for (int i = 0; i < 4; i++) {
+            int nx = cur.x + dx[i];
+            int ny = cur.y + dy[i];
+            
+            // 5. 合法性判断（这是重点！别写漏了！）
+            // 越界了吗？是障碍物吗？是不是已经访问过了（dist != -1）？
+            if (nx >= 1 && nx <= n && ny >= 1 && ny <= m && 
+                mp[nx][ny] == 0 && dist[nx][ny] == -1) {
+                
+                // 更新距离并入队
+                dist[nx][ny] = dist[cur.x][cur.y] + 1;
+                q.push({nx, ny});
+            }
+        }
+    }
+    
+    cout << "No Solution! 笨蛋！" << endl;
+}
+
+int main() {
+    // 这种IO优化还需要我提醒你吗？
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    cin >> n >> m;
+    for(int i=1; i<=n; ++i)
+        for(int j=1; j<=m; ++j)
+            cin >> mp[i][j];
+            
+    // 假设从(1,1)走到(n,m)
+    bfs(1, 1, n, m);
+    
+    return 0;
+}
 }
 ```
 
